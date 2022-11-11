@@ -1,10 +1,19 @@
 package com.example.ecom.demo.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "products")
 public class Product {
-    private int productID, supplierID,unit,price;
+    @Id
+    private int productID;
+    int supplierID, unit, price;
     private String productName;
 
-    public Product() {}
+    public Product() {
+    }
 
     public Product(int productID, int supplierID, int unit, int price, String productName) {
         this.productID = productID;

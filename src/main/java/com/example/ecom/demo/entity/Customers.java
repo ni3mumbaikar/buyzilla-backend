@@ -1,8 +1,11 @@
 package com.example.ecom.demo.entity;
 
+//@Entity
 public class Customers {
-    int customerID,postalCode;
-    String customerName,address,city,country;
+//    @Id
+    int customerID;
+    int postalCode;
+    String customerName, address, city, country;
 
     public Customers() {
     }
@@ -64,3 +67,4 @@ public class Customers {
         this.country = country;
     }
 }
+
