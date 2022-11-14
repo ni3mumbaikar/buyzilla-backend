@@ -1,6 +1,5 @@
 package com.example.ecom.demo;
 
-import com.example.ecom.demo.utils.ProductsUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EcomdemoApplication {
 
 	public static void main(String[] args) {
-		ProductsUtil.init();
+//		ProductsUtil.init();
 		SpringApplication.run(EcomdemoApplication.class, args);
 	}
 
