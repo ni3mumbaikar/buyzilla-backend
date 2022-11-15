@@ -1,8 +1,9 @@
 package com.example.ecom.demo.handler;
 
+import com.example.ecom.demo.exceptions.CustomerAlreadyExistException;
+import com.example.ecom.demo.exceptions.CustomerNotFoundException;
+import com.example.ecom.demo.exceptions.ProductAlreadyExistException;
 import com.example.ecom.demo.exceptions.ProductNotFoundException;
-import com.example.ecom.demo.exceptions.ResourceAlreadyExistException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,13 +16,19 @@ public class ControllerAdvisor {
         return new ResponseEntity<>(productNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ResourceAlreadyExistException.class)
-    ResponseEntity<String>resourceAlreadyExist(ResourceAlreadyExistException resourceAlreadyExistException){
-        return new ResponseEntity<>(resourceAlreadyExistException.getMessage(),HttpStatus.valueOf(403));
+    @ExceptionHandler(ProductAlreadyExistException.class)
+    ResponseEntity<String>productAlreadyExist(ProductAlreadyExistException productAlreadyExistException){
+        return new ResponseEntity<>(productAlreadyExistException.getMessage(),HttpStatus.valueOf(403));
     }
 
-    @ExceptionHandler(JsonProcessingException.class)
-    ResponseEntity<String>jsonException(JsonProcessingException jsonProcessingException){
-        return new ResponseEntity<>(jsonProcessingException.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+    @ExceptionHandler(CustomerAlreadyExistException.class)
+    ResponseEntity<String> customerAlreadyExistException(CustomerAlreadyExistException customerAlreadyExistException){
+        return new ResponseEntity<>(customerAlreadyExistException.getMessage(),HttpStatus.valueOf(403));
     }
+
+    @ExceptionHandler(CustomerNotFoundException.class)
+    ResponseEntity<String> customerNotFound(CustomerNotFoundException customerNotFoundException){
+        return new ResponseEntity<>(customerNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
 }

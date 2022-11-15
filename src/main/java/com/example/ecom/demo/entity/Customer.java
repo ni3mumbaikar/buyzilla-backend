@@ -1,16 +1,19 @@
 package com.example.ecom.demo.entity;
 
-//@Entity
-public class Customers {
-//    @Id
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Customer {
+    @Id
     int customerID;
     int postalCode;
     String customerName, address, city, country;
 
-    public Customers() {
+    public Customer() {
     }
 
-    public Customers(int customerID, int postalCode, String customerName, String address, String city, String country) {
+    public Customer(int customerID, int postalCode, String customerName, String address, String city, String country) {
         this.customerID = customerID;
         this.postalCode = postalCode;
         this.customerName = customerName;

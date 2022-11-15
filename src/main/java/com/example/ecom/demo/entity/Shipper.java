@@ -1,14 +1,14 @@
 package com.example.ecom.demo.entity;
 
-public class Shippers {
+public class Shipper {
     private int shipperID;
     private long phone;
     private String shipperName;
 
-    public Shippers() {
+    public Shipper() {
     }
 
-    public Shippers(int shipperID, long phone, String shipperName) {
+    public Shipper(int shipperID, long phone, String shipperName) {
         this.shipperID = shipperID;
         this.phone = phone;
         this.shipperName = shipperName;

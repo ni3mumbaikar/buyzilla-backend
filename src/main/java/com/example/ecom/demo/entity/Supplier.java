@@ -1,13 +1,13 @@
 package com.example.ecom.demo.entity;
 
-public class Suppliers {
+public class Supplier {
     private int supplierID,postalCode;
     private String supplierName,Address,City;
 
-    public Suppliers() {
+    public Supplier() {
     }
 
-    public Suppliers(int supplierID, int postalCode, String supplierName, String address, String city) {
+    public Supplier(int supplierID, int postalCode, String supplierName, String address, String city) {
         this.supplierID = supplierID;
         this.postalCode = postalCode;
         this.supplierName = supplierName;

@@ -2,14 +2,14 @@ package com.example.ecom.demo.entity;
 
 import java.util.Date;
 
-public class Orders {
+public class Order {
     private int OrderID, CustomerID, shipperID;
     private Date date;
 
-    public Orders() {
+    public Order() {
     }
 
-    public Orders(int orderID, int customerID, int shipperID, Date date) {
+    public Order(int orderID, int customerID, int shipperID, Date date) {
         OrderID = orderID;
         CustomerID = customerID;
         this.shipperID = shipperID;

@@ -2,7 +2,7 @@ package com.example.ecom.demo.service;
 
 import com.example.ecom.demo.entity.Product;
 import com.example.ecom.demo.exceptions.ProductNotFoundException;
-import com.example.ecom.demo.exceptions.ResourceAlreadyExistException;
+import com.example.ecom.demo.exceptions.ProductAlreadyExistException;
 import com.example.ecom.demo.respository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,20 +20,25 @@ public class ProductService {
         return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
     }
 
-    public void saveProduct(Product product) throws ResourceAlreadyExistException {
-        if (productRepository.findById(product.getProductID()).isPresent()) {
-            throw new ResourceAlreadyExistException(product.getProductID());
+    public void saveProduct(List<Product> products) throws ProductAlreadyExistException {
+        for (Product product : products) {
+            if (productRepository.findById(product.getProductID()).isPresent()) {
+                throw new ProductAlreadyExistException(product.getProductID());
+            }
+            productRepository.save(product);
         }
-        productRepository.save(product);
     }
 
     public ResponseEntity<Product> getProductByPid(Integer pid) throws ProductNotFoundException {
         return new ResponseEntity<>(productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid)), HttpStatus.OK);
     }
 
-    public void updateProduct(Product p) throws ProductNotFoundException {
-        if (productRepository.findById(p.getProductID()).isEmpty()){
-            throw new ProductNotFoundException(p.getProductID());
+    public void updateProduct(List<Product> products) throws ProductNotFoundException {
+        for (Product p : products) {
+            if (productRepository.findById(p.getProductID()).isEmpty()) {
+                throw new ProductNotFoundException(p.getProductID());
+            }
+            productRepository.save(p);
         }
     }
 }
