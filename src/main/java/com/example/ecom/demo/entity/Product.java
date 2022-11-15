@@ -1,23 +1,28 @@
 package com.example.ecom.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
 public class Product {
     @Id
     private int productID;
-    int supplierID, unit, price;
+
+    @ManyToOne
+    @JoinColumn(name = "supplierID")
+    Supplier supplier;
+
+    private int unit, price;
     private String productName;
 
     public Product() {
     }
 
-    public Product(int productID, int supplierID, int unit, int price, String productName) {
+    public Product(int productID,
+                   int supplierID,
+                   int unit, int price, String productName) {
         this.productID = productID;
-        this.supplierID = supplierID;
+//        this.supplierID = supplierID;
         this.unit = unit;
         this.price = price;
         this.productName = productName;
@@ -31,13 +36,13 @@ public class Product {
         this.productID = productID;
     }
 
-    public int getSupplierID() {
+/*    public int getSupplierID() {
         return supplierID;
     }
 
     public void setSupplierID(int supplierID) {
         this.supplierID = supplierID;
-    }
+    }*/
 
     public int getUnit() {
         return unit;
@@ -63,7 +68,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "productID=" + productID +
-                ", supplierID=" + supplierID +
+//                ", supplierID=" + supplierID +
                 ", unit=" + unit +
                 ", price=" + price +
                 ", productName='" + productName + '\'' +
@@ -72,6 +77,14 @@ public class Product {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
 }

@@ -1,18 +1,41 @@
 package com.example.ecom.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "suppliers")
 public class Supplier {
-    private int supplierID,postalCode;
-    private String supplierName,Address,City;
+    @Id
+    private int supplierID;
+    private int postalCode;
+    private String supplierName, Address, City;
+
+    @OneToMany
+    @JsonIgnore
+    @JoinColumn(name = "supplierID")
+    private List<Product> products;
 
     public Supplier() {
     }
 
-    public Supplier(int supplierID, int postalCode, String supplierName, String address, String city) {
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Supplier(int supplierID, int postalCode, String supplierName, String address, String city, List<Product> products) {
         this.supplierID = supplierID;
         this.postalCode = postalCode;
         this.supplierName = supplierName;
         Address = address;
         City = city;
+        this.products = products;
     }
 
     public int getSupplierID() {

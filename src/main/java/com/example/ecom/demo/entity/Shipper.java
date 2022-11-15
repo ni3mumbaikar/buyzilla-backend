@@ -1,5 +1,8 @@
 package com.example.ecom.demo.entity;
 
+import javax.persistence.Table;
+
+@Table(name = "shippers")
 public class Shipper {
     private int shipperID;
     private long phone;

@@ -1,7 +1,9 @@
 package com.example.ecom.demo.entity;
 
+import javax.persistence.Table;
 import java.util.Date;
 
+@Table(name = "orders")
 public class Order {
     private int OrderID, CustomerID, shipperID;
     private Date date;

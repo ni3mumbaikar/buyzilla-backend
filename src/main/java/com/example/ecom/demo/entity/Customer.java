@@ -2,8 +2,10 @@ package com.example.ecom.demo.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "customers")
 public class Customer {
     @Id
     int customerID;
