@@ -4,11 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EcomdemoApplication {
+public class EcomDemoApplication {
 
 	public static void main(String[] args) {
-//		ProductsUtil.init();
-		SpringApplication.run(EcomdemoApplication.class, args);
+		SpringApplication.run(EcomDemoApplication.class, args);
 	}
 
 }
