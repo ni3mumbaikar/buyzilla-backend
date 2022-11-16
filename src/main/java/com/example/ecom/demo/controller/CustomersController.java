@@ -34,6 +34,4 @@ public class CustomersController {
         customerService.updateCustomer(customers);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

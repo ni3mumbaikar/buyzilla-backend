@@ -1,45 +1,53 @@
 package com.example.ecom.demo.entity;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 @Table(name = "orders")
 public class Order {
-    private int OrderID, CustomerID, shipperID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int orderID;
+
+    @ManyToOne
+    private Customer customer;
+
+    @ManyToOne
+    private Shipper shipper;
+
     private Date date;
 
     public Order() {
     }
 
-    public Order(int orderID, int customerID, int shipperID, Date date) {
-        OrderID = orderID;
-        CustomerID = customerID;
-        this.shipperID = shipperID;
+    public Order(int orderID, Date date) {
+        this.orderID = orderID;
         this.date = date;
     }
 
+    public Shipper getShipper() {
+        return shipper;
+    }
+
+    public void setShipper(Shipper shipper) {
+        this.shipper = shipper;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public int getOrderID() {
-        return OrderID;
+        return orderID;
     }
 
     public void setOrderID(int orderID) {
-        OrderID = orderID;
-    }
-
-    public int getCustomerID() {
-        return CustomerID;
-    }
-
-    public void setCustomerID(int customerID) {
-        CustomerID = customerID;
-    }
-
-    public int getShipperID() {
-        return shipperID;
-    }
-
-    public void setShipperID(int shipperID) {
-        this.shipperID = shipperID;
+        this.orderID = orderID;
     }
 
     public Date getDate() {

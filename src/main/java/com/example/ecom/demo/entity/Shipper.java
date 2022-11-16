@@ -1,9 +1,13 @@
 package com.example.ecom.demo.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "shippers")
+@Entity
 public class Shipper {
+    @Id
     private int shipperID;
     private long phone;
     private String shipperName;
