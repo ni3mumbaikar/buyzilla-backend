@@ -9,10 +9,10 @@ public class Product {
     private int productID;
 
     @ManyToOne
-    @JoinColumn(name = "supplierID")
+    @JoinColumn(name = "supplierID", updatable = false, insertable = false)
     Supplier supplier;
 
-    private int unit, price;
+    private int unit, price, supplierID;
     private String productName;
 
     public Product() {
@@ -22,7 +22,7 @@ public class Product {
                    int supplierID,
                    int unit, int price, String productName) {
         this.productID = productID;
-//        this.supplierID = supplierID;
+        this.supplierID = supplierID;
         this.unit = unit;
         this.price = price;
         this.productName = productName;
@@ -36,13 +36,13 @@ public class Product {
         this.productID = productID;
     }
 
-/*    public int getSupplierID() {
+    public int getSupplierID() {
         return supplierID;
     }
 
     public void setSupplierID(int supplierID) {
         this.supplierID = supplierID;
-    }*/
+    }
 
     public int getUnit() {
         return unit;
@@ -68,7 +68,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "productID=" + productID +
-//                ", supplierID=" + supplierID +
+                ", supplierID=" + supplierID +
                 ", unit=" + unit +
                 ", price=" + price +
                 ", productName='" + productName + '\'' +

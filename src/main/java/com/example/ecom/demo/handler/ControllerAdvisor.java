@@ -4,6 +4,7 @@ import com.example.ecom.demo.exceptions.CustomerAlreadyExistException;
 import com.example.ecom.demo.exceptions.CustomerNotFoundException;
 import com.example.ecom.demo.exceptions.ProductAlreadyExistException;
 import com.example.ecom.demo.exceptions.ProductNotFoundException;
+import org.hsqldb.HsqlException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,6 +30,11 @@ public class ControllerAdvisor {
     @ExceptionHandler(CustomerNotFoundException.class)
     ResponseEntity<String> customerNotFound(CustomerNotFoundException customerNotFoundException){
         return new ResponseEntity<>(customerNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(HsqlException.class)
+    ResponseEntity<String> HsqlDb(HsqlException hsqlException){
+        return new ResponseEntity<>(hsqlException.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
 }

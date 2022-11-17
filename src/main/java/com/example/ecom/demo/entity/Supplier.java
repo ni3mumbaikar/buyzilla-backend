@@ -1,8 +1,8 @@
 package com.example.ecom.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -13,20 +13,7 @@ public class Supplier {
     private int postalCode;
     private String supplierName, Address, City;
 
-    @OneToMany
-    @JsonIgnore
-    @JoinColumn(name = "supplierID")
-    private List<Product> products;
-
     public Supplier() {
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 
     public Supplier(int supplierID, int postalCode, String supplierName, String address, String city, List<Product> products) {
@@ -35,7 +22,6 @@ public class Supplier {
         this.supplierName = supplierName;
         Address = address;
         City = city;
-        this.products = products;
     }
 
     public int getSupplierID() {

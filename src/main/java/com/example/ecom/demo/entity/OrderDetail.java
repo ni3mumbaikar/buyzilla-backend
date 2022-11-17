@@ -9,12 +9,14 @@ public class OrderDetail{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderDetailId;
 
+    private int orderID,productID;
+
     @ManyToOne
-    @JoinColumn(name = "orderID")
+    @JoinColumn(name = "orderID", insertable = false, updatable = false)
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "productID")
+    @JoinColumn(name = "productID", insertable = false, updatable = false)
     private Product product;
 
     int quantity;
@@ -57,5 +59,21 @@ public class OrderDetail{
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 }
