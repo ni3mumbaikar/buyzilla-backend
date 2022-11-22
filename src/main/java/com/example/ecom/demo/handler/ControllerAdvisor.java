@@ -4,6 +4,7 @@ import com.example.ecom.demo.exceptions.*;
 import org.hsqldb.HsqlException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -32,6 +33,13 @@ public class ControllerAdvisor {
     @ExceptionHandler(SupplierNotFoundException.class)
     ResponseEntity<String> supplierNotFound(SupplierNotFoundException supplierNotFoundException){
         return new ResponseEntity<>(supplierNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ResponseEntity<String> methodArgumentNotValid(MethodArgumentNotValidException methodArgumentNotValidException){
+        StringBuilder sb = new StringBuilder();
+        methodArgumentNotValidException.getFieldErrors().forEach(err-> sb.append(err.getDefaultMessage()).append("\n"));
+        return new ResponseEntity<>(sb.toString(),HttpStatus.valueOf(406));
     }
 
     @ExceptionHandler(HsqlException.class)
