@@ -3,7 +3,9 @@ package com.example.ecom.demo.controller;
 import com.example.ecom.demo.entity.Product;
 import com.example.ecom.demo.exceptions.ProductNotFoundException;
 import com.example.ecom.demo.exceptions.ProductAlreadyExistException;
+import com.example.ecom.demo.exceptions.SupplierNotFoundException;
 import com.example.ecom.demo.service.ProductService;
+import com.example.ecom.demo.util.ValidList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,6 @@ import java.util.List;
 
 @RestController
 public class ProductsController {
-
-    // TODO : Handle exceptions from controller advisor
 
     @Autowired //inject existing object from registry
     ProductService productService;
@@ -31,14 +31,14 @@ public class ProductsController {
     }
 
     @PostMapping("/api/v1/products")
-    ResponseEntity<String> saveProduct(@RequestBody @Valid List<Product> products) throws ProductAlreadyExistException {
-        productService.saveProduct(products);
+    ResponseEntity<String> saveProducts(@RequestBody @Valid ValidList<com.example.ecom.demo.vo.Product> products) throws ProductAlreadyExistException, SupplierNotFoundException {
+        productService.saveProducts(products);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/api/v1/product")
-    ResponseEntity<String> updateProduct(@RequestBody @Valid List<Product> products) throws ProductNotFoundException {
-        productService.updateProduct(products);
+    ResponseEntity<String> updateProducts(@RequestBody @Valid List<com.example.ecom.demo.vo.Product> products) throws ProductNotFoundException, SupplierNotFoundException {
+        productService.updateProducts(products);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

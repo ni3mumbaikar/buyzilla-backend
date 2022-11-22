@@ -1,9 +1,6 @@
 package com.example.ecom.demo.handler;
 
-import com.example.ecom.demo.exceptions.CustomerAlreadyExistException;
-import com.example.ecom.demo.exceptions.CustomerNotFoundException;
-import com.example.ecom.demo.exceptions.ProductAlreadyExistException;
-import com.example.ecom.demo.exceptions.ProductNotFoundException;
+import com.example.ecom.demo.exceptions.*;
 import org.hsqldb.HsqlException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +27,11 @@ public class ControllerAdvisor {
     @ExceptionHandler(CustomerNotFoundException.class)
     ResponseEntity<String> customerNotFound(CustomerNotFoundException customerNotFoundException){
         return new ResponseEntity<>(customerNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SupplierNotFoundException.class)
+    ResponseEntity<String> supplierNotFound(SupplierNotFoundException supplierNotFoundException){
+        return new ResponseEntity<>(supplierNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(HsqlException.class)

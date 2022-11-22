@@ -39,4 +39,13 @@ public class CustomerService {
         }
     }
 
+    public Customer getEntity(com.example.ecom.demo.vo.Customer customer){
+        return Customer.builder()
+                .customerName(customer.getCustomerName())
+                .address(customer.getAddress())
+                .postalCode(customer.getPostalCode())
+                .city(customer.getCity())
+                .country(customer.getCountry()).build();
+    }
+
 }
