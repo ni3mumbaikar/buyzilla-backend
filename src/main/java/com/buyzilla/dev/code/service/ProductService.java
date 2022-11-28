@@ -21,8 +21,8 @@ public class ProductService {
     @Autowired
     SuppliersRepository suppliersRepository;
 
-    public ResponseEntity<List<com.buyzilla.dev.code.entity.Product>> getProducts() {
-        return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
+    public List<com.buyzilla.dev.code.entity.Product> getProducts() {
+        return productRepository.findAll();
     }
 
     @Transactional(rollbackFor = {SupplierNotFoundException.class, ProductAlreadyExistException.class})
@@ -35,8 +35,8 @@ public class ProductService {
         }
     }
 
-    public ResponseEntity<com.buyzilla.dev.code.entity.Product> getProductByPid(Integer pid) throws ProductNotFoundException {
-        return new ResponseEntity<>(productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid)), HttpStatus.OK);
+    public com.buyzilla.dev.code.entity.Product getProductByPid(Integer pid) throws ProductNotFoundException {
+        return productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid));
     }
 
     public void updateProducts(List<Product> products) throws ProductNotFoundException, SupplierNotFoundException {

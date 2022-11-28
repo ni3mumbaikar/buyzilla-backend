@@ -34,10 +34,10 @@ public class ProductServiceTest {
         System.out.println("Initializing");
     }*/
 
-    @Test
+/*    @Test
     @Sql("/scripts/test.sql")
     public void findAllTest(){
         assertEquals(200,productService.getProducts().getStatusCodeValue());
-    }
+    }*/
 
 }

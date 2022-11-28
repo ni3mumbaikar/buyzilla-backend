@@ -23,12 +23,12 @@ public class ProductsController {
 
     @GetMapping
     ResponseEntity<List<com.buyzilla.dev.code.entity.Product>> getProducts() {
-        return productService.getProducts();
+        return ResponseEntity.ok(productService.getProducts()) ;
     }
 
     @GetMapping("/{pid}")
     ResponseEntity<com.buyzilla.dev.code.entity.Product> getProductByPid(@PathVariable Integer pid) throws ProductNotFoundException {
-        return productService.getProductByPid(pid);
+        return ResponseEntity.ok(productService.getProductByPid(pid));
     }
 
     @PostMapping
