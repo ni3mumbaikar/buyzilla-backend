@@ -14,9 +14,12 @@ import javax.persistence.*;
 @Table(name = "shippers")
 @Entity
 public class Shipper {
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private int shipperID;
+
     private long phone;
     private String shipperName;
+
 }

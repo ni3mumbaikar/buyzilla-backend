@@ -15,7 +15,7 @@ public class ShippersController {
     @Autowired
     ShipperService shipperService;
 
-    @GetMapping("/api/v1/shipper")
+    @GetMapping("/api/v1/shippers")
     ResponseEntity<List<Shipper>> getShippers(){
         return shipperService.getShippers();
     }

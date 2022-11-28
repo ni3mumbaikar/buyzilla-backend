@@ -11,9 +11,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "suppliers")
 public class Supplier {
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private int supplierID;
+
     private int postalCode;
     private String supplierName, Address, City;
 }

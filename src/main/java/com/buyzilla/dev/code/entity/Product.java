@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "products")
 public class Product {
+
     @ManyToOne
     @JoinColumn(name = "supplierID")
     Supplier supplier;
@@ -21,6 +22,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private int productID;
+
     private int unit, price;
     private String productName;
 

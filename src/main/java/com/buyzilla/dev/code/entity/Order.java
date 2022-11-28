@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,14 +18,19 @@ import java.util.Date;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int orderID;
 
-    @ManyToOne
+    @ManyToOne @JoinColumn(name = "customerID")
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne @JoinColumn(name = "shipperID")
     private Shipper shipper;
 
+    @Temporal(TemporalType.DATE)
     private Date date;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JoinColumn(name = "orderId")
+    private List<OrderDetail> orderDetails;
+
 }

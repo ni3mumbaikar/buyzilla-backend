@@ -3,21 +3,22 @@ package com.buyzilla.dev.code.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Data
 @Entity
 @Table(name = "OrderDetails")
 public class OrderDetail {
-    int quantity;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int orderDetailId;
-    private int orderID, productID;
+
+    @Min(value = 1, message = "Minimum 1 quantity is required")
+    int quantity;
+
     @ManyToOne
-    @JoinColumn(name = "orderID", insertable = false, updatable = false)
-    private Order order;
-    @ManyToOne
-    @JoinColumn(name = "productID", insertable = false, updatable = false)
+    @JoinColumn(name = "productID")
     private Product product;
 
 }
