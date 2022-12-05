@@ -4,6 +4,7 @@ import com.buyzilla.dev.code.entity.Customer;
 import com.buyzilla.dev.code.entity.OrderDetail;
 import com.buyzilla.dev.code.entity.Shipper;
 import com.buyzilla.dev.code.exceptions.CustomerNotFoundException;
+import com.buyzilla.dev.code.exceptions.ProductNotFoundException;
 import com.buyzilla.dev.code.exceptions.ShipperNotFoundException;
 import com.buyzilla.dev.code.respository.CustomerRepository;
 import com.buyzilla.dev.code.respository.OrderRepository;
@@ -32,7 +33,8 @@ public class OrderService {
         return new ResponseEntity<>(orderRepository.findAll(), HttpStatus.OK);
     }
 
-    public void saveOrders(com.buyzilla.dev.code.vo.Order order) throws ParseException, CustomerNotFoundException, ShipperNotFoundException {
+
+    public void saveOrders(com.buyzilla.dev.code.vo.Order order) throws ParseException, CustomerNotFoundException, ShipperNotFoundException, ProductNotFoundException {
         Order order1 = convertToOrders(order);
         if(customerRepository.findById(order.getCustomerID()).isEmpty())
             throw new CustomerNotFoundException(order.getCustomerID());
@@ -41,7 +43,7 @@ public class OrderService {
         orderRepository.save(order1);
     }
 
-    static Order convertToOrders(com.buyzilla.dev.code.vo.Order orderVo) throws ParseException {
+    static Order convertToOrders(com.buyzilla.dev.code.vo.Order orderVo) throws ParseException, ProductNotFoundException {
         Order order = new Order();
         order.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(orderVo.getDate()));
         Customer customers = new Customer();

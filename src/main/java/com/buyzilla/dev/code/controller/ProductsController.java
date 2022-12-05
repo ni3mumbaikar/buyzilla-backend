@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/products")
 public class ProductsController {
 
@@ -38,7 +39,7 @@ public class ProductsController {
     }
 
     @PutMapping
-    ResponseEntity<String> updateProducts(@RequestBody @Valid List<Product> products) throws ProductNotFoundException, SupplierNotFoundException {
+    ResponseEntity<String> updateProducts(@RequestBody @Valid ValidList<Product> products) throws ProductNotFoundException, SupplierNotFoundException {
         productService.updateProducts(products);
         return new ResponseEntity<>(HttpStatus.OK);
     }

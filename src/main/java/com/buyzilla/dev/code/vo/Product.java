@@ -17,4 +17,6 @@ public class Product {
     private int supplierID;
     @NotBlank(message = "productName cannot be empty")
     private String productName;
+    @NotBlank(message = "Image link cannot be blank")
+    private String productImage;
 }

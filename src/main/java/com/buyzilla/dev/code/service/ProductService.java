@@ -7,11 +7,16 @@ import com.buyzilla.dev.code.vo.Product;
 import com.buyzilla.dev.code.exceptions.SupplierNotFoundException;
 import com.buyzilla.dev.code.respository.SuppliersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service //Create Injectable singleton object of service
@@ -20,12 +25,21 @@ public class ProductService {
     ProductRepository productRepository;
     @Autowired
     SuppliersRepository suppliersRepository;
+    @Autowired
+    PlatformTransactionManager platformTransactionManager;
+    TransactionTemplate transactionTemplate;
+
+    @PostConstruct
+    void initTransactionManagement() {
+        transactionTemplate = new TransactionTemplate(platformTransactionManager);
+    }
 
     public List<com.buyzilla.dev.code.entity.Product> getProducts() {
         return productRepository.findAll();
     }
 
-    @Transactional(rollbackFor = {SupplierNotFoundException.class, ProductAlreadyExistException.class})
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    //TODO : Study propagation
     public void saveProducts(List<Product> products) throws ProductAlreadyExistException, SupplierNotFoundException {
         for (Product product : products) {
             if (productRepository.findById(product.getProductID()).isPresent()) {
@@ -33,7 +47,32 @@ public class ProductService {
             }
             productRepository.save(getEntity(product));
         }
-    }
+        // enhanced control using programmatic transaction management.
+//        TransactionCallback<Void > transactionCallback = new TransactionCallback<Void>() {
+//            @Override
+//            public Void doInTransaction(TransactionStatus status) {
+//                for (Product product : products) {
+//                    if (productRepository.findById(product.getProductID()).isPresent()) {
+//
+//                        try {
+//                            throw new ProductAlreadyExistException(product.getProductID());
+//                        } catch (ProductAlreadyExistException e) {
+//                            throw new RuntimeException(e);
+//                        }
+//
+//                    }
+//                    try {
+//                        productRepository.save(getEntity(product));
+//                    } catch (SupplierNotFoundException e) {
+////                        throw new RuntimeException(e);
+//                    }
+//                }
+//                return null;
+//            }
+//        };
+//        transactionTemplate.execute(transactionCallback);
+
+}
 
     public com.buyzilla.dev.code.entity.Product getProductByPid(Integer pid) throws ProductNotFoundException {
         return productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid));
@@ -53,8 +92,9 @@ public class ProductService {
                 .productName(product.getProductName())
                 .productID(product.getProductID())
                 .price(product.getPrice())
-                .supplier(suppliersRepository.findById(product.getSupplierID()).orElseThrow(()-> new SupplierNotFoundException(product.getSupplierID())))
+                .supplier(suppliersRepository.findById(product.getSupplierID()).orElseThrow(() -> new SupplierNotFoundException(product.getSupplierID())))
                 .unit(product.getUnit()).build();
+        //TODO : jsoncopy one liner
     }
 
     /*public vo.Product getVo(Product product){
