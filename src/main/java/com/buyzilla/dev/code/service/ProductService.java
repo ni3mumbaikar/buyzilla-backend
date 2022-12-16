@@ -41,38 +41,29 @@ public class ProductService {
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     //TODO : Study propagation
     public void saveProducts(List<Product> products) throws ProductAlreadyExistException, SupplierNotFoundException {
-        for (Product product : products) {
-            if (productRepository.findById(product.getProductID()).isPresent()) {
-                throw new ProductAlreadyExistException(product.getProductID());
-            }
-            productRepository.save(getEntity(product));
-        }
-        // enhanced control using programmatic transaction management.
-//        TransactionCallback<Void > transactionCallback = new TransactionCallback<Void>() {
-//            @Override
-//            public Void doInTransaction(TransactionStatus status) {
-//                for (Product product : products) {
-//                    if (productRepository.findById(product.getProductID()).isPresent()) {
-//
-//                        try {
-//                            throw new ProductAlreadyExistException(product.getProductID());
-//                        } catch (ProductAlreadyExistException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//
-//                    }
-//                    try {
-//                        productRepository.save(getEntity(product));
-//                    } catch (SupplierNotFoundException e) {
-////                        throw new RuntimeException(e);
-//                    }
-//                }
-//                return null;
+//        for (Product product : products) {
+//            if (productRepository.findById(product.getProductID()).isPresent()) {
+//                throw new ProductAlreadyExistException(product.getProductID());
 //            }
-//        };
-//        transactionTemplate.execute(transactionCallback);
+//            productRepository.save(getEntity(product));
+//        }
+        // enhanced control using programmatic transaction management.
+        TransactionCallback<Void> transactionCallback = new TransactionCallback<Void>() {
+            @Override
+            public Void doInTransaction(TransactionStatus status) {
+                for (Product product : products) {
+                    if (productRepository.findById(product.getProductID()).isPresent()) {
+                        throw new ProductAlreadyExistException(product.getProductID());
+                    }
+                    productRepository.save(getEntity(product));
+                }
+                return null;
+            }
 
-}
+        };
+        transactionTemplate.execute(transactionCallback);
+
+    }
 
     public com.buyzilla.dev.code.entity.Product getProductByPid(Integer pid) throws ProductNotFoundException {
         return productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid));
