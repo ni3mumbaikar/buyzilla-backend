@@ -1,13 +1,11 @@
 package com.buyzilla.dev.code.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +22,8 @@ public class Product {
     private int productID;
 
     private int unit, price;
-    private String productName,productImage;
+    private String productName;
+    @Column(name = "product_image")
+    private String productImage;
 
 }

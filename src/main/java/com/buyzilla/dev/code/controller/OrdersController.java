@@ -6,8 +6,7 @@ import com.buyzilla.dev.code.exceptions.ProductNotFoundException;
 import com.buyzilla.dev.code.exceptions.ShipperNotFoundException;
 import com.buyzilla.dev.code.service.OrderDetailsService;
 import com.buyzilla.dev.code.service.OrderService;
-import com.buyzilla.dev.code.util.ValidList;
-import org.aspectj.weaver.ast.Or;
+import com.buyzilla.dev.code.vo.OrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +28,15 @@ public class OrdersController {
 
     OrderDetailsService orderDetailsService;
 
-    @GetMapping
+    @GetMapping()
     ResponseEntity<List<Order>> getOrders() {
         return orderService.getOrders();
     }
 
     @PostMapping
-    ResponseEntity<String> saveOrders(@RequestBody @Valid com.buyzilla.dev.code.vo.Order order) throws ParseException, CustomerNotFoundException, ShipperNotFoundException, ProductNotFoundException {
-        System.out.println(order);
-        orderService.saveOrders(order);
+    ResponseEntity<String> saveOrders(@RequestBody @Valid OrderVo orderVo) throws ParseException, CustomerNotFoundException, ShipperNotFoundException, ProductNotFoundException {
+        System.out.println(orderVo);
+        orderService.saveOrders(orderVo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

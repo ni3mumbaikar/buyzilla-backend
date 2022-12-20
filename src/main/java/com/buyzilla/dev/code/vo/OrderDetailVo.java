@@ -5,9 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class OrderDetail {
+public class OrderDetailVo {
     @NotNull(message = "quantity is required")
     private int quantity;
-    @NotNull(message = "Product ID is required")
+    @NotNull(message = "ProductVo ID is required")
     private int productID;
 }

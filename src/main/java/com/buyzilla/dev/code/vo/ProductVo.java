@@ -1,14 +1,12 @@
 package com.buyzilla.dev.code.vo;
 
 import lombok.Getter;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Getter
-public class Product {
+public class ProductVo {
     private int productID;
     @Min(value = 1,message = "minimum 1 Unit is required")
     private int unit;

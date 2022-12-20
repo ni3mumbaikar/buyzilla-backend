@@ -3,11 +3,10 @@ package com.buyzilla.dev.code.vo;
 import lombok.Getter;
 
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
-public class Customer {
+public class CustomerVo {
     int customerID;
     @Digits(integer = 6, fraction = 0)
     int postalCode;

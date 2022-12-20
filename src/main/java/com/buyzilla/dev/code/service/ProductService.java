@@ -3,13 +3,12 @@ package com.buyzilla.dev.code.service;
 import com.buyzilla.dev.code.exceptions.ProductAlreadyExistException;
 import com.buyzilla.dev.code.exceptions.ProductNotFoundException;
 import com.buyzilla.dev.code.respository.ProductRepository;
-import com.buyzilla.dev.code.vo.Product;
+import com.buyzilla.dev.code.vo.ProductVo;
 import com.buyzilla.dev.code.exceptions.SupplierNotFoundException;
 import com.buyzilla.dev.code.respository.SuppliersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,10 +37,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     //TODO : Study propagation
-    public void saveProducts(List<Product> products) throws ProductAlreadyExistException, SupplierNotFoundException {
-//        for (Product product : products) {
+    public void saveProducts(List<ProductVo> productVos) throws ProductAlreadyExistException, SupplierNotFoundException {
+//        for (ProductVo product : productVos) {
 //            if (productRepository.findById(product.getProductID()).isPresent()) {
 //                throw new ProductAlreadyExistException(product.getProductID());
 //            }
@@ -51,7 +50,7 @@ public class ProductService {
         TransactionCallback<Void> transactionCallback = new TransactionCallback<Void>() {
             @Override
             public Void doInTransaction(TransactionStatus status) {
-                for (Product product : products) {
+                for (ProductVo product : productVos) {
                     if (productRepository.findById(product.getProductID()).isPresent()) {
                         throw new ProductAlreadyExistException(product.getProductID());
                     }
@@ -69,8 +68,8 @@ public class ProductService {
         return productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid));
     }
 
-    public void updateProducts(List<Product> products) throws ProductNotFoundException, SupplierNotFoundException {
-        for (Product p : products) {
+    public void updateProducts(List<ProductVo> productVos) throws ProductNotFoundException, SupplierNotFoundException {
+        for (ProductVo p : productVos) {
             if (productRepository.findById(p.getProductID()).isEmpty()) {
                 throw new ProductNotFoundException(p.getProductID());
             }
@@ -78,18 +77,19 @@ public class ProductService {
         }
     }
 
-    public com.buyzilla.dev.code.entity.Product getEntity(Product product) throws SupplierNotFoundException {
+    public com.buyzilla.dev.code.entity.Product getEntity(ProductVo productVo) throws SupplierNotFoundException {
         return com.buyzilla.dev.code.entity.Product.builder()
-                .productName(product.getProductName())
-                .productID(product.getProductID())
-                .price(product.getPrice())
-                .supplier(suppliersRepository.findById(product.getSupplierID()).orElseThrow(() -> new SupplierNotFoundException(product.getSupplierID())))
-                .unit(product.getUnit()).build();
+                .productName(productVo.getProductName())
+                .productImage(productVo.getProductImage())
+                .productID(productVo.getProductID())
+                .price(productVo.getPrice())
+                .supplier(suppliersRepository.findById(productVo.getSupplierID()).orElseThrow(() -> new SupplierNotFoundException(productVo.getSupplierID())))
+                .unit(productVo.getUnit()).build();
         //TODO : jsoncopy one liner
     }
 
-    /*public vo.Product getVo(Product product){
-        return vo.Product.builder()
+    /*public vo.ProductVo getVo(ProductVo product){
+        return vo.ProductVo.builder()
                 .productID(product.getProductID())
                 .productName(product.getProductName())
                 .price(product.getPrice())

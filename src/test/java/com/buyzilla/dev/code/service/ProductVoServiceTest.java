@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 //        BuyZillaApplication.class,
 //        ProductService.class
 //})
-public class ProductServiceTest {
+public class ProductVoServiceTest {
 
     @Autowired
     ProductService productService;

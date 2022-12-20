@@ -10,12 +10,13 @@ import com.buyzilla.dev.code.respository.CustomerRepository;
 import com.buyzilla.dev.code.respository.OrderRepository;
 import com.buyzilla.dev.code.entity.Order;
 import com.buyzilla.dev.code.respository.ShipperRepository;
+import com.buyzilla.dev.code.vo.OrderDetailVo;
+import com.buyzilla.dev.code.vo.OrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,20 +31,22 @@ public class OrderService {
     @Autowired
     ShipperRepository shipperRepository;
     public ResponseEntity<List<Order>> getOrders() {
+
         return new ResponseEntity<>(orderRepository.findAll(), HttpStatus.OK);
+
     }
 
 
-    public void saveOrders(com.buyzilla.dev.code.vo.Order order) throws ParseException, CustomerNotFoundException, ShipperNotFoundException, ProductNotFoundException {
-        Order order1 = convertToOrders(order);
-        if(customerRepository.findById(order.getCustomerID()).isEmpty())
-            throw new CustomerNotFoundException(order.getCustomerID());
-        if(shipperRepository.findById(order.getShipperID()).isEmpty())
-            throw new ShipperNotFoundException(order.getShipperID());
+    public void saveOrders(OrderVo orderVo) throws ParseException, CustomerNotFoundException, ShipperNotFoundException, ProductNotFoundException {
+        Order order1 = convertToOrders(orderVo);
+        if(customerRepository.findById(orderVo.getCustomerID()).isEmpty())
+            throw new CustomerNotFoundException(orderVo.getCustomerID());
+        if(shipperRepository.findById(orderVo.getShipperID()).isEmpty())
+            throw new ShipperNotFoundException(orderVo.getShipperID());
         orderRepository.save(order1);
     }
 
-    static Order convertToOrders(com.buyzilla.dev.code.vo.Order orderVo) throws ParseException, ProductNotFoundException {
+    static Order convertToOrders(OrderVo orderVo) throws ParseException, ProductNotFoundException {
         Order order = new Order();
         order.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(orderVo.getDate()));
         Customer customers = new Customer();
@@ -53,8 +56,8 @@ public class OrderService {
         shippers.setShipperID(orderVo.getShipperID());
         order.setShipper(shippers);
         List<OrderDetail> orderDetails = new ArrayList<>(); // Generics
-        for(com.buyzilla.dev.code.vo.OrderDetail orderDetailsVo : orderVo.getOrderDetails()){ //for-each
-            orderDetails.add(OrderDetailsService.convertToOrderDetail(orderDetailsVo));
+        for(OrderDetailVo orderDetailsVoVo : orderVo.getOrderDetailVos()){ //for-each
+            orderDetails.add(OrderDetailsService.convertToOrderDetail(orderDetailsVoVo));
         }
         order.setOrderDetails(orderDetails);
         return order;
