@@ -46,7 +46,7 @@ public class ProductsController {
     }
 
     @DeleteMapping("/{pid}")
-    ResponseEntity<HttpStatus> deleteProduct(@RequestBody Integer pid){
+    ResponseEntity<HttpStatus> deleteProduct(@PathVariable Integer pid){
         productService.deleteProductById(pid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
