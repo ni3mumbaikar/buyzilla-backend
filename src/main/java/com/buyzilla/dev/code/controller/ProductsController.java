@@ -44,6 +44,13 @@ public class ProductsController {
         productService.updateProducts(productVos);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{pid}")
+    ResponseEntity<HttpStatus> deleteProduct(@RequestBody Integer pid){
+        productService.deleteProductById(pid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
 
 

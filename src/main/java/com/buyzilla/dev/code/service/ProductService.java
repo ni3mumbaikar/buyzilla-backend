@@ -85,7 +85,10 @@ public class ProductService {
                 .price(productVo.getPrice())
                 .supplier(suppliersRepository.findById(productVo.getSupplierID()).orElseThrow(() -> new SupplierNotFoundException(productVo.getSupplierID())))
                 .unit(productVo.getUnit()).build();
-        //TODO : jsoncopy one liner
+    }
+
+    public void deleteProductById(Integer pid) {
+        productRepository.delete(productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid)));
     }
 
     /*public vo.ProductVo getVo(ProductVo product){
