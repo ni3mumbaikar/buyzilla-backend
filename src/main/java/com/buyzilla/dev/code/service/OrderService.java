@@ -13,6 +13,8 @@ import com.buyzilla.dev.code.respository.ShipperRepository;
 import com.buyzilla.dev.code.vo.OrderDetailVo;
 import com.buyzilla.dev.code.vo.OrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@PropertySource("classpath:eng_exceptions.properties")
 @Service
 public class OrderService {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    Environment environment;
+
     @Autowired
     ShipperRepository shipperRepository;
     public ResponseEntity<List<Order>> getOrders() {
@@ -40,9 +48,9 @@ public class OrderService {
     public void saveOrders(OrderVo orderVo) throws ParseException, CustomerNotFoundException, ShipperNotFoundException, ProductNotFoundException {
         Order order1 = convertToOrders(orderVo);
         if(customerRepository.findById(orderVo.getCustomerID()).isEmpty())
-            throw new CustomerNotFoundException(orderVo.getCustomerID());
+            throw new CustomerNotFoundException(environment.getProperty("customer_not_found"));
         if(shipperRepository.findById(orderVo.getShipperID()).isEmpty())
-            throw new ShipperNotFoundException(orderVo.getShipperID());
+            throw new ShipperNotFoundException(environment.getProperty("shipper_not_found"));
         orderRepository.save(order1);
     }
 

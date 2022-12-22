@@ -7,6 +7,9 @@ import com.buyzilla.dev.code.vo.ProductVo;
 import com.buyzilla.dev.code.exceptions.SupplierNotFoundException;
 import com.buyzilla.dev.code.respository.SuppliersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -18,6 +21,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+
+@PropertySource("classpath:eng_exceptions.properties")
 @Service //Create Injectable singleton object of service
 public class ProductService {
     @Autowired
@@ -27,6 +32,8 @@ public class ProductService {
     @Autowired
     PlatformTransactionManager platformTransactionManager;
     TransactionTemplate transactionTemplate;
+    @Autowired
+    Environment environment;
 
     @PostConstruct
     void initTransactionManagement() {
@@ -52,7 +59,7 @@ public class ProductService {
             public Void doInTransaction(TransactionStatus status) {
                 for (ProductVo product : productVos) {
                     if (productRepository.findById(product.getProductID()).isPresent()) {
-                        throw new ProductAlreadyExistException(product.getProductID());
+                        throw new ProductAlreadyExistException(environment.getProperty("product_already_exist"));
                     }
                     productRepository.save(getEntity(product));
                 }
@@ -65,13 +72,13 @@ public class ProductService {
     }
 
     public com.buyzilla.dev.code.entity.Product getProductByPid(Integer pid) throws ProductNotFoundException {
-        return productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid));
+        return productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(environment.getProperty("product_not_found")));
     }
 
     public void updateProducts(List<ProductVo> productVos) throws ProductNotFoundException, SupplierNotFoundException {
         for (ProductVo p : productVos) {
             if (productRepository.findById(p.getProductID()).isEmpty()) {
-                throw new ProductNotFoundException(p.getProductID());
+                throw new ProductNotFoundException(environment.getProperty("product_not_found"));
             }
             productRepository.save(getEntity(p));
         }
@@ -83,20 +90,11 @@ public class ProductService {
                 .productImage(productVo.getProductImage())
                 .productID(productVo.getProductID())
                 .price(productVo.getPrice())
-                .supplier(suppliersRepository.findById(productVo.getSupplierID()).orElseThrow(() -> new SupplierNotFoundException(productVo.getSupplierID())))
+                .supplier(suppliersRepository.findById(productVo.getSupplierID()).orElseThrow(() -> new SupplierNotFoundException(environment.getProperty("supplier_not_found"))))
                 .unit(productVo.getUnit()).build();
     }
 
     public void deleteProductById(Integer pid) {
-        productRepository.delete(productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(pid)));
+        productRepository.delete(productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(environment.getProperty("product_not_found"))));
     }
-
-    /*public vo.ProductVo getVo(ProductVo product){
-        return vo.ProductVo.builder()
-                .productID(product.getProductID())
-                .productName(product.getProductName())
-                .price(product.getPrice())
-                .unit(product.getUnit()).build();
-    }*/
-
 }
