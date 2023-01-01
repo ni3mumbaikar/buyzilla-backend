@@ -46,7 +46,7 @@ public class ProductService {
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     //TODO : Study propagation
-    public void saveProducts(List<ProductVo> productVos) throws ProductAlreadyExistException, SupplierNotFoundException {
+    public void saveProducts(List<ProductVo> productVos){
 //        for (ProductVo product : productVos) {
 //            if (productRepository.findById(product.getProductID()).isPresent()) {
 //                throw new ProductAlreadyExistException(product.getProductID());
@@ -71,7 +71,7 @@ public class ProductService {
 
     }
 
-    public com.buyzilla.dev.code.entity.Product getProductByPid(Integer pid) throws ProductNotFoundException {
+    public com.buyzilla.dev.code.entity.Product getProductByPid(Integer pid){
         return productRepository.findById(pid).orElseThrow(() -> new ProductNotFoundException(environment.getProperty("product_not_found")));
     }
 

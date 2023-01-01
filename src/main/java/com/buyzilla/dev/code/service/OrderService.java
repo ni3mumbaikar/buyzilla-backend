@@ -45,16 +45,16 @@ public class OrderService {
     }
 
 
-    public void saveOrders(OrderVo orderVo) throws ParseException, CustomerNotFoundException, ShipperNotFoundException, ProductNotFoundException {
-        Order order1 = convertToOrders(orderVo);
+    public void saveOrders(OrderVo orderVo) throws ParseException {
         if(customerRepository.findById(orderVo.getCustomerID()).isEmpty())
             throw new CustomerNotFoundException(environment.getProperty("customer_not_found"));
         if(shipperRepository.findById(orderVo.getShipperID()).isEmpty())
             throw new ShipperNotFoundException(environment.getProperty("shipper_not_found"));
+        Order order1 = convertToOrders(orderVo);
         orderRepository.save(order1);
     }
 
-    static Order convertToOrders(OrderVo orderVo) throws ParseException, ProductNotFoundException {
+    static Order convertToOrders(OrderVo orderVo) throws ParseException{
         Order order = new Order();
         order.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(orderVo.getDate()));
         Customer customers = new Customer();

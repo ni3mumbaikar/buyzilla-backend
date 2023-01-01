@@ -16,25 +16,11 @@ import javax.annotation.PostConstruct;
 @PropertySource("classpath:eng_exceptions.properties")
 public class OrderDetailsService {
 
-    @Autowired
-    ProductRepository productRepository;
-
-    @Autowired
-    Environment environment;
-
-    static ProductRepository pr;
-    static
-    Environment env;
-    @PostConstruct
-    void initRepo(){
-        pr = productRepository;
-        env = environment;
-    }
-
-    public static OrderDetail convertToOrderDetail(OrderDetailVo orderDetailsVoVo) throws ProductNotFoundException {
+    public static OrderDetail convertToOrderDetail(OrderDetailVo orderDetailsVoVo){
         OrderDetail orderDetail = new OrderDetail();
-        Product product = pr.findById(orderDetail.getProduct().getProductID()).orElseThrow(()->new ProductNotFoundException(env.getProperty("product_not_found")));
-        orderDetail.setProduct(product);
+        orderDetail.setProduct(Product.builder()
+                .productID(orderDetailsVoVo.getProductID())
+                .build());
         orderDetail.setQuantity(orderDetailsVoVo.getQuantity());
         return orderDetail;
     }
