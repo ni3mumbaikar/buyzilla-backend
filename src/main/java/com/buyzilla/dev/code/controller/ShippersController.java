@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.net.http.HttpResponse;
 import java.util.List;
 
@@ -24,9 +25,22 @@ public class ShippersController {
         return shipperService.getShippers();
     }
 
+    @PutMapping
+    ResponseEntity<String> updateShipper(@RequestBody Shipper shipper){
+        shipperService.updateShipper(shipper);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping
+    ResponseEntity<String> addShipper(@RequestBody Shipper shipper){
+        shipperService.addShipper(shipper);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/{sid}")
     ResponseEntity<String> deleteShipper(@PathVariable Integer sid){
-        return ResponseEntity.ok(shipperService.deleteShipper(sid));
+        shipperService.deleteShipper(sid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

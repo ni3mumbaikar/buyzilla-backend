@@ -27,14 +27,22 @@ public class CustomersController {
     }
 
     @PostMapping
-    ResponseEntity<String> saveCustomer(@RequestBody @Valid ValidList<CustomerVo> customerVos) throws CustomerAlreadyExistException {
+    ResponseEntity<String> saveCustomer(@RequestBody @Valid ValidList<CustomerVo> customerVos){
         customerService.saveCustomer(customerVos);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
-    ResponseEntity<String> updateCustomer(@RequestBody @Valid ValidList<CustomerVo> customerVos) throws CustomerNotFoundException {
+    ResponseEntity<String> updateCustomer(@RequestBody @Valid ValidList<CustomerVo> customerVos){
         customerService.updateCustomer(customerVos);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{cid}")
+    ResponseEntity<String> deleteCustomer(@PathVariable Integer cid){
+        customerService.deleteCustomer(cid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

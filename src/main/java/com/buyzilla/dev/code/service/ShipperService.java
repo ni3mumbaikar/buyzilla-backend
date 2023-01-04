@@ -1,6 +1,7 @@
 package com.buyzilla.dev.code.service;
 
 import com.buyzilla.dev.code.entity.Shipper;
+import com.buyzilla.dev.code.exceptions.ShipperAlreadyExistsException;
 import com.buyzilla.dev.code.exceptions.ShipperNotFoundException;
 import com.buyzilla.dev.code.respository.ShipperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,26 @@ public class ShipperService {
         return new ResponseEntity<>(shipperRepository.findAll(), HttpStatus.OK);
     }
 
-    public String deleteShipper(Integer sid) {
+    public void deleteShipper(Integer sid) {
         System.out.println(shipperRepository.findById(sid));
         shipperRepository.delete(shipperRepository.findById(sid).orElseThrow(() -> new ShipperNotFoundException(environment.getProperty("shipper_not_found"))));
-        return "Shipper deleted";
+
+    }
+
+    public void updateShipper(Shipper shipper) {
+        System.out.println(shipper);
+        if (shipperRepository.findById(shipper.getShipperID()).isPresent()) {
+            shipperRepository.save(shipper);
+        } else {
+            throw new ShipperNotFoundException(environment.getProperty("shipper_not_found"));
+        }
+
+    }
+
+    public void addShipper(Shipper shipper) {
+        if (shipperRepository.findById(shipper.getShipperID()).isPresent()) {
+            throw new ShipperAlreadyExistsException(environment.getProperty("shipper_already_exists"));
+        }
+        shipperRepository.save(shipper);
     }
 }

@@ -45,7 +45,7 @@ public class CustomerService {
         }
     }
 
-    public Customer getEntity(CustomerVo customerVo){
+    public Customer getEntity(CustomerVo customerVo) {
         return Customer.builder()
                 .customerName(customerVo.getCustomerName())
                 .address(customerVo.getAddress())
@@ -54,4 +54,7 @@ public class CustomerService {
                 .country(customerVo.getCountry()).build();
     }
 
+    public void deleteCustomer(Integer cid) {
+        customerRepository.delete(customerRepository.findById(cid).orElseThrow(()-> new CustomerNotFoundException(environment.getProperty("customer_not_found"))));
+    }
 }

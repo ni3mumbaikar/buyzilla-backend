@@ -15,6 +15,11 @@ public class ControllerAdvisor {
         return new ResponseEntity<>(productNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ShipperAlreadyExistsException.class)
+    ResponseEntity<String>handleShipperAlreadyExists(ShipperAlreadyExistsException shipperAlreadyExistsException){
+        return new ResponseEntity<>(shipperAlreadyExistsException.getMessage(),HttpStatus.valueOf(403));
+    }
+
     @ExceptionHandler(ProductAlreadyExistException.class)
     ResponseEntity<String>productAlreadyExist(ProductAlreadyExistException productAlreadyExistException){
         return new ResponseEntity<>(productAlreadyExistException.getMessage(),HttpStatus.valueOf(403));
