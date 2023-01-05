@@ -39,9 +39,7 @@ public class OrderService {
     @Autowired
     ShipperRepository shipperRepository;
     public ResponseEntity<List<Order>> getOrders() {
-
         return new ResponseEntity<>(orderRepository.findAll(), HttpStatus.OK);
-
     }
 
 
@@ -70,4 +68,9 @@ public class OrderService {
         order.setOrderDetails(orderDetails);
         return order;
     }
+
+    public List<Order> findByCustomerID(Integer cid){
+        return orderRepository.findByCustomerCustomerID(cid);
+    }
+
 }

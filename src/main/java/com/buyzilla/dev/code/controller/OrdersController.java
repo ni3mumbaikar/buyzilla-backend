@@ -39,4 +39,10 @@ public class OrdersController {
         orderService.saveOrders(orderVo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/{cid}")
+    ResponseEntity<List<Order>> findByCustomerID(@PathVariable Integer cid){
+        return ResponseEntity.ok(orderService.findByCustomerID(cid));
+    }
+
 }
