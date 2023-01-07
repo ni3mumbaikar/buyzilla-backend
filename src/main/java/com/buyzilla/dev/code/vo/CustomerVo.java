@@ -1,6 +1,7 @@
 package com.buyzilla.dev.code.vo;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
+@ToString
 public class CustomerVo {
     int customerID;
     @Digits(integer = 6, fraction = 0, message = "6 Digit pin code is required")

@@ -29,7 +29,7 @@ public class AuthController {
         if(customer == null){
             throw new AuthFailedException(environment.getProperty("authentication_failed"));
         }
-        if(customer.getEmail().equals(customerVo.getEmail()) && customer.getPassword().equals(customerVo.getPassword())){
+        else if(customer.getEmail().equals(customerVo.getEmail()) && customer.getPassword().equals(customerVo.getPassword())){
             return ResponseEntity.ok(customer);
         }
         throw new AuthFailedException(environment.getProperty("authentication_failed"));
