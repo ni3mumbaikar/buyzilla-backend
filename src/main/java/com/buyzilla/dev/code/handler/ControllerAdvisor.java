@@ -25,14 +25,19 @@ public class ControllerAdvisor {
         return new ResponseEntity<>(productAlreadyExistException.getMessage(),HttpStatus.valueOf(403));
     }
 
+    @ExceptionHandler(AuthFailedException.class)
+    ResponseEntity<String> authenticationFailed(AuthFailedException authFailedException){
+        return new ResponseEntity<>(authFailedException.getMessage(),HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(CustomerAlreadyExistException.class)
     ResponseEntity<String> customerAlreadyExistException(CustomerAlreadyExistException customerAlreadyExistException){
         return new ResponseEntity<>(customerAlreadyExistException.getMessage(),HttpStatus.valueOf(403));
     }
 
-    @ExceptionHandler(CustomerNotFoundException.class)
-    ResponseEntity<String> customerNotFound(CustomerNotFoundException customerNotFoundException){
-        return new ResponseEntity<>(customerNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
+    @ExceptionHandler(UserNotFoundException.class)
+    ResponseEntity<String> customerNotFound(UserNotFoundException userNotFoundException){
+        return new ResponseEntity<>(userNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SupplierNotFoundException.class)

@@ -1,7 +1,5 @@
 package com.buyzilla.dev.code.controller;
 
-import com.buyzilla.dev.code.exceptions.CustomerAlreadyExistException;
-import com.buyzilla.dev.code.exceptions.CustomerNotFoundException;
 import com.buyzilla.dev.code.util.ValidList;
 import com.buyzilla.dev.code.vo.CustomerVo;
 import com.buyzilla.dev.code.service.CustomerService;

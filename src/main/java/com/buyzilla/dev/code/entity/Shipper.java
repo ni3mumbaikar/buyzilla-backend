@@ -17,9 +17,9 @@ public class Shipper {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private int shipperID;
+    private Integer shipperID;
 
-    private long phone;
+    private Long phone;
     private String shipperName;
 
 }

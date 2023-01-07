@@ -19,9 +19,9 @@ public class Product {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private int productID;
+    private Integer productID;
 
-    private int unit, price;
+    private Integer unit, price;
     private String productName;
     @Column(name = "product_image")
     private String productImage;

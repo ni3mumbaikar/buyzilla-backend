@@ -1,7 +1,7 @@
 package com.buyzilla.dev.code.service;
 
 import com.buyzilla.dev.code.exceptions.CustomerAlreadyExistException;
-import com.buyzilla.dev.code.exceptions.CustomerNotFoundException;
+import com.buyzilla.dev.code.exceptions.UserNotFoundException;
 import com.buyzilla.dev.code.respository.CustomerRepository;
 import com.buyzilla.dev.code.entity.Customer;
 import com.buyzilla.dev.code.vo.CustomerVo;
@@ -36,10 +36,10 @@ public class CustomerService {
         }
     }
 
-    public void updateCustomer(List<CustomerVo> customerVos) throws CustomerNotFoundException {
+    public void updateCustomer(List<CustomerVo> customerVos) throws UserNotFoundException {
         for (CustomerVo customerVo : customerVos) {
             if (customerRepository.findById(customerVo.getCustomerID()).isEmpty()) {
-                throw new CustomerNotFoundException(environment.getProperty("customer_not_found"));
+                throw new UserNotFoundException(environment.getProperty("customer_not_found"));
             }
             customerRepository.save(getEntity(customerVo));
         }
@@ -51,10 +51,16 @@ public class CustomerService {
                 .address(customerVo.getAddress())
                 .postalCode(customerVo.getPostalCode())
                 .city(customerVo.getCity())
+                .email(customerVo.getEmail())
+                .password(customerVo.getPassword())
                 .country(customerVo.getCountry()).build();
     }
 
     public void deleteCustomer(Integer cid) {
-        customerRepository.delete(customerRepository.findById(cid).orElseThrow(()-> new CustomerNotFoundException(environment.getProperty("customer_not_found"))));
+        customerRepository.delete(customerRepository.findById(cid).orElseThrow(()-> new UserNotFoundException(environment.getProperty("customer_not_found"))));
+    }
+
+    public Customer findByEmail(String email) {
+        return customerRepository.findByEmail(email);
     }
 }

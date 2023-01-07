@@ -1,6 +1,8 @@
 package com.buyzilla.dev.code.vo;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
@@ -8,15 +10,19 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 public class CustomerVo {
     int customerID;
-    @Digits(integer = 6, fraction = 0)
+    @Digits(integer = 6, fraction = 0, message = "6 Digit pin code is required")
     int postalCode;
-    @NotEmpty
+    @NotEmpty(message = "Customer name should not be empty")
     String customerName;
-    @NotEmpty
+    @NotEmpty(message = "Address should not be empty")
     String address;
-    @NotEmpty
+    @NotEmpty(message = "City should not be empty")
     String city;
-    @NotEmpty
+    @NotEmpty(message = "Country should no be empty")
     String country;
+    @NotEmpty( message = "Password should not be empty")
+    String password;
+    @NotEmpty (message = "Email should not be empty")
+    String email;
 }
 

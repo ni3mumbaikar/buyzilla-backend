@@ -12,10 +12,10 @@ public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int orderDetailId;
+    private Integer orderDetailId;
 
     @Min(value = 1, message = "Minimum 1 quantity is required")
-    int quantity;
+    Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "productID")

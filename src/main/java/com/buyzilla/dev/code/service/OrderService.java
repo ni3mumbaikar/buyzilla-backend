@@ -3,8 +3,7 @@ package com.buyzilla.dev.code.service;
 import com.buyzilla.dev.code.entity.Customer;
 import com.buyzilla.dev.code.entity.OrderDetail;
 import com.buyzilla.dev.code.entity.Shipper;
-import com.buyzilla.dev.code.exceptions.CustomerNotFoundException;
-import com.buyzilla.dev.code.exceptions.ProductNotFoundException;
+import com.buyzilla.dev.code.exceptions.UserNotFoundException;
 import com.buyzilla.dev.code.exceptions.ShipperNotFoundException;
 import com.buyzilla.dev.code.respository.CustomerRepository;
 import com.buyzilla.dev.code.respository.OrderRepository;
@@ -45,7 +44,7 @@ public class OrderService {
 
     public void saveOrders(OrderVo orderVo) throws ParseException {
         if(customerRepository.findById(orderVo.getCustomerID()).isEmpty())
-            throw new CustomerNotFoundException(environment.getProperty("customer_not_found"));
+            throw new UserNotFoundException(environment.getProperty("customer_not_found"));
         if(shipperRepository.findById(orderVo.getShipperID()).isEmpty())
             throw new ShipperNotFoundException(environment.getProperty("shipper_not_found"));
         Order order1 = convertToOrders(orderVo);

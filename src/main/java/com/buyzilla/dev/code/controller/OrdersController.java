@@ -1,7 +1,7 @@
 package com.buyzilla.dev.code.controller;
 
 import com.buyzilla.dev.code.entity.Order;
-import com.buyzilla.dev.code.exceptions.CustomerNotFoundException;
+import com.buyzilla.dev.code.exceptions.UserNotFoundException;
 import com.buyzilla.dev.code.exceptions.ProductNotFoundException;
 import com.buyzilla.dev.code.exceptions.ShipperNotFoundException;
 import com.buyzilla.dev.code.service.OrderDetailsService;
@@ -34,7 +34,7 @@ public class OrdersController {
     }
 
     @PostMapping
-    ResponseEntity<String> saveOrders(@RequestBody @Valid OrderVo orderVo) throws ParseException, CustomerNotFoundException, ShipperNotFoundException, ProductNotFoundException {
+    ResponseEntity<String> saveOrders(@RequestBody @Valid OrderVo orderVo) throws ParseException, UserNotFoundException, ShipperNotFoundException, ProductNotFoundException {
         System.out.println(orderVo);
         orderService.saveOrders(orderVo);
         return new ResponseEntity<>(HttpStatus.OK);

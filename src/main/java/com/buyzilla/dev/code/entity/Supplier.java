@@ -14,8 +14,8 @@ public class Supplier {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private int supplierID;
+    private Integer supplierID;
 
-    private int postalCode;
+    private Integer postalCode;
     private String supplierName, Address, City;
 }
