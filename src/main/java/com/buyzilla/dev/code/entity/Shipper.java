@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "shippers")
+@Table(name = "shippers_10708461")
 @Entity
 public class Shipper {
 

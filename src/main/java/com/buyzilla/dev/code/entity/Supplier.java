@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "suppliers")
+@Table(name = "suppliers_10708461")
 public class Supplier {
 
     @GeneratedValue(strategy = GenerationType.AUTO)

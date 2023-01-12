@@ -1,12 +1,13 @@
 package com.buyzilla.dev.code.handler;
 
 import com.buyzilla.dev.code.exceptions.*;
-import org.hsqldb.HsqlException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.sql.SQLException;
 
 @ControllerAdvice
 public class ControllerAdvisor {
@@ -52,8 +53,8 @@ public class ControllerAdvisor {
         return new ResponseEntity<>(sb.toString(),HttpStatus.valueOf(406));
     }
 
-    @ExceptionHandler(HsqlException.class)
-    ResponseEntity<String> HsqlDb(HsqlException hsqlException){
+    @ExceptionHandler(SQLException.class)
+    ResponseEntity<String> HsqlDb(SQLException hsqlException){
         return new ResponseEntity<>(hsqlException.getMessage(),HttpStatus.BAD_REQUEST);
     }
 

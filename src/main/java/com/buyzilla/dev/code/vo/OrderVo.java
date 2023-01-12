@@ -8,7 +8,8 @@ import java.util.List;
 
 @Data
 public class OrderVo {
-    @NotNull(message = "Date is required") @Pattern(regexp = "^(2[0-9]{3})-(0[1-9]|1[012])-(0[1-9]|[12][1-9]|[3][01])", message = "date should be in yyyy-mm-dd format and should be valid")
+    @NotNull(message = "Date is required")
+    @Pattern(regexp = "^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$", message = "date should be in yyyy-mm-dd format and should be valid")
     private String date;
     @NotNull(message = "CustomerVo Id is required")
     private int customerID;
