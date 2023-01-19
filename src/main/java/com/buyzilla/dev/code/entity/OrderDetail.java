@@ -1,9 +1,10 @@
 package com.buyzilla.dev.code.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
+
 
 @Data
 @Entity

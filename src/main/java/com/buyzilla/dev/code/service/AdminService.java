@@ -5,7 +5,6 @@ import com.buyzilla.dev.code.respository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.SequenceGenerator;
 
 @Service
 public class AdminService {

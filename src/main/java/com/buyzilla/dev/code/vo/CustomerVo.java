@@ -1,12 +1,14 @@
 package com.buyzilla.dev.code.vo;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
+
+
 
 @Getter
 @ToString

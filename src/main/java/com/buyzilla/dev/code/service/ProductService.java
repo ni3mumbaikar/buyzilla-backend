@@ -6,6 +6,7 @@ import com.buyzilla.dev.code.respository.ProductRepository;
 import com.buyzilla.dev.code.vo.ProductVo;
 import com.buyzilla.dev.code.exceptions.SupplierNotFoundException;
 import com.buyzilla.dev.code.respository.SuppliersRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -18,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.annotation.PostConstruct;
+
 import java.util.List;
 
 

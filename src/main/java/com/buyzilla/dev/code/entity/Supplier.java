@@ -1,8 +1,9 @@
 package com.buyzilla.dev.code.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
+
 
 @Data
 @Builder

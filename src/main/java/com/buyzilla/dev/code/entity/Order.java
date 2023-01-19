@@ -1,11 +1,12 @@
 package com.buyzilla.dev.code.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer orderID;
 
-    @ManyToOne @JoinColumn(name = "customerID")
+    @ManyToOne
+    @JoinColumn(name = "customerID")
     private Customer customer;
 
     @ManyToOne @JoinColumn(name = "shipperID")

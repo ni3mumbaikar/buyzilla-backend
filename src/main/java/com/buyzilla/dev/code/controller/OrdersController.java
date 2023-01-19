@@ -7,6 +7,7 @@ import com.buyzilla.dev.code.exceptions.ShipperNotFoundException;
 import com.buyzilla.dev.code.service.OrderDetailsService;
 import com.buyzilla.dev.code.service.OrderService;
 import com.buyzilla.dev.code.vo.OrderVo;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 import java.text.ParseException;
 import java.util.List;
 

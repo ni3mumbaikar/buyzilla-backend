@@ -1,9 +1,10 @@
 package com.buyzilla.dev.code.vo;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+
 
 @Getter
 public class ProductVo {
